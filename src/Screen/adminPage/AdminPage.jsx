@@ -99,8 +99,18 @@ const navigation = useNavigate()
                     <td>{item.bankDetails.accountOwnerName}</td>
                     <td>{item.bankDetails.routingNumber}</td>
                     <td>{item.bankDetails.accountNumber}</td>
-                    <td>{item.tax.options.join(", ")}</td>
-                    <td>{item.tax.taxDeclarationForm}</td>
+                    <td>{item.taxOptions.join(", ")}</td>
+                    <td>
+                    {item.taxDeclarationForm && (
+                    <a
+                    href={`https://employee-record-aiqw.onrender.com/files/${encodeURIComponent(item.taxDeclarationForm)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                      View Tax Declaration Form
+                    </a>
+                  )}
+                    </td>
                   </tr>
                 ))
 

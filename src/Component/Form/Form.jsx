@@ -675,13 +675,65 @@ const handle_tax = (e) => {
 
 
 
+
+
+
+
+
+
 // SUBMIT BUTTON
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
     setloading(true)
+
+
+    const formData = new FormData();
+    // Append fields from userInfo object
+    formData.append("firstname", userInfo.firstname);
+    formData.append("lastname", userInfo.lastname);
+    formData.append("email", userInfo.email);
+    formData.append("phoneNumber", userInfo.phoneNumber);
+    formData.append("citizenship", userInfo.citizenship);
+    formData.append("ssn", userInfo.ssn);
+    formData.append("veteranStatus", userInfo.veteranStatus);
+    formData.append("employerName", userInfo.employerName);
+    formData.append("positionTitle", userInfo.positionTitle);
+    formData.append("reportsTo", userInfo.reportsTo);
+    formData.append("employmentType", userInfo.employmentType);
+    formData.append("taxOptions", JSON.stringify(userInfo.tax.options));
+    formData.append("taxDeclarationForm", userInfo.tax.taxDeclarationForm);
+
+    // Append nested objects as JSON strings
+    formData.append("birthdate", JSON.stringify(userInfo.birthdate));
+    formData.append("address", JSON.stringify(userInfo.address));
+    formData.append(
+      "emergencyContact",
+      JSON.stringify(userInfo.emergencyContact)
+    );
+    formData.append("startDate", JSON.stringify(userInfo.startDate));
+    formData.append(
+      "contractEndDate",
+      JSON.stringify(userInfo.contractEndDate)
+    );
+    formData.append("bankDetails", JSON.stringify(userInfo.bankDetails));
+
+    // Append array fields as JSON strings
+    formData.append("disabilities", JSON.stringify(userInfo.disabilities));
+    formData.append(
+      "usualDaysOfEmployment",
+      JSON.stringify(userInfo.usualDaysOfEmployment)
+    );
+
   try {
-    const response = await axios.post('https://employee-record-aiqw.onrender.com/api/submitemployeedata',userInfo);
+    const response = await axios.post('https://employee-record-aiqw.onrender.com/api/submitemployeedata',
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+    );
     if (response.status === 201) {
       setShowPopUp(true)
       setUserInfo(
